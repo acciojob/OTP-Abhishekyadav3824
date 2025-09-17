@@ -1,26 +1,22 @@
-//your JS code here. If required.
-      const inputs = document.querySelectorAll(".code-container");
+   const inputs = document.querySelectorAll('.code');
 
-      inputs.forEach((input, index) => {
-        input.addEventListener("input", (e) => {
-          const value = e.target.value;
-          if (value.length > 1) {
-            e.target.value = value.charAt(0); // allow only 1 digit
-          }
-          if (value && index < inputs.length - 1) {
-            inputs[index + 1].focus();
-          }
-        });
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', (e) => {
+        const value = e.target.value.replace(/[^0-9]/g, ""); // only digits
+        e.target.value = value;
 
-        input.addEventListener("keydown", (e) => {
-          if (e.key === "Backspace") {
-            if (input.value === "" && index > 0) {
-              inputs[index - 1].focus();
-              inputs[index - 1].value = "";
-            }
-          }
-        });
+        if (value && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
       });
 
-      // Auto focus first box on load
-      inputs[0].focus();
+      input.addEventListener('keydown', (e) => {
+        if (e.key === "Backspace" && !input.value && index > 0) {
+          inputs[index - 1].focus();
+          inputs[index - 1].value = "";
+        }
+      });
+    });
+
+    // auto-focus first input when page loads
+    inputs[0].focus();
